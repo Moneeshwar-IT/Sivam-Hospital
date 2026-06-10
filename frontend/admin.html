@@ -1,0 +1,845 @@
+<!-- FILE NAME: admin.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+
+body{
+background:#020617;
+color:white;
+display:flex;
+min-height:100vh;
+overflow-x:hidden;
+}
+
+/* SIDEBAR */
+.sidebar{
+width:270px;
+height:100vh;
+background:#0f172a;
+padding:20px;
+position:fixed;
+left:0;
+top:0;
+z-index:10000;
+border-right:1px solid rgba(255,255,255,.06);
+}
+
+.logo{
+font-size:24px;
+font-weight:bold;
+margin-bottom:40px;
+text-align:center;
+}
+
+.logo span{color:#38bdf8}
+
+.sidebar a{
+display:flex;
+align-items:center;
+gap:12px;
+padding:15px;
+margin-bottom:12px;
+border-radius:12px;
+text-decoration:none;
+color:white;
+transition:.3s;
+font-size:16px;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+background:#38bdf8;
+}
+
+/* LOGIN */
+.admin-login-screen{
+position:fixed;
+top:0;
+left:270px;
+width:calc(100% - 270px);
+height:100vh;
+background:#020617;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+padding:20px;
+}
+
+.admin-login-box{
+background:#111827;
+padding:35px;
+border-radius:20px;
+width:100%;
+max-width:380px;
+box-shadow:0 0 25px rgba(56,189,248,.25);
+text-align:center;
+}
+
+.admin-login-box h2{
+color:#38bdf8;
+margin-bottom:20px;
+font-size:28px;
+}
+
+.admin-login-box input{
+width:100%;
+padding:14px;
+margin:10px 0;
+border:none;
+border-radius:10px;
+background:#1e293b;
+color:white;
+outline:none;
+font-size:15px;
+}
+
+.admin-login-box button{
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+background:#38bdf8;
+color:white;
+cursor:pointer;
+font-size:16px;
+font-weight:bold;
+}
+
+.error{
+color:#ef4444;
+margin-top:10px;
+display:none;
+}
+
+/* MAIN */
+.main{
+margin-left:270px;
+width:calc(100% - 270px);
+padding:30px;
+display:none;
+}
+
+.title{
+text-align:center;
+font-size:38px;
+margin-bottom:30px;
+color:#38bdf8;
+}
+
+.container{
+max-width:1300px;
+margin:auto;
+}
+
+/* CARDS */
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-bottom:25px;
+}
+
+.card{
+background:#111827;
+padding:25px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 0 20px rgba(56,189,248,.15);
+}
+
+.card i{
+font-size:38px;
+color:#38bdf8;
+margin-bottom:12px;
+}
+
+.card h2{
+font-size:32px;
+}
+
+.card p{
+color:#cbd5e1;
+}
+
+/* FORMS */
+.form-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:25px;
+margin-bottom:25px;
+}
+
+.form-box,
+.table-box{
+background:#111827;
+padding:25px;
+border-radius:20px;
+box-shadow:0 0 20px rgba(56,189,248,.15);
+margin-bottom:25px;
+}
+
+.form-box h2,
+.table-box h2{
+margin-bottom:20px;
+color:#38bdf8;
+}
+
+input,
+button{
+width:100%;
+padding:14px;
+margin:10px 0;
+border:none;
+border-radius:10px;
+font-size:15px;
+}
+
+input{
+background:#1e293b;
+color:white;
+outline:none;
+}
+
+button{
+background:#38bdf8;
+color:white;
+cursor:pointer;
+transition:.3s;
+font-weight:bold;
+}
+
+button:hover{background:#0ea5e9}
+
+/* TABLE */
+.table-scroll{
+overflow-x:auto;
+border-radius:10px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:700px;
+}
+
+th,td{
+border:1px solid #374151;
+padding:14px;
+text-align:center;
+}
+
+th{
+background:#0f172a;
+color:#38bdf8;
+}
+
+td{background:#1e293b}
+
+.delete-btn{
+background:#ef4444;
+padding:8px 14px;
+font-size:13px;
+}
+
+.delete-btn:hover{background:#dc2626}
+
+/* TABLET */
+@media(max-width:900px){
+
+.sidebar{
+width:80px;
+padding:15px 10px;
+}
+
+.logo{
+font-size:12px;
+}
+
+.sidebar a{
+font-size:0;
+justify-content:center;
+}
+
+.sidebar a i{
+font-size:20px;
+}
+
+.admin-login-screen{
+left:80px;
+width:calc(100% - 80px);
+}
+
+.main{
+margin-left:80px;
+width:calc(100% - 80px);
+padding:15px;
+}
+
+.form-grid{
+grid-template-columns:1fr;
+}
+
+.title{
+font-size:28px;
+}
+
+}
+
+/* MOBILE */
+@media(max-width:600px){
+
+body{display:block}
+
+.sidebar{
+width:100%;
+height:70px;
+position:fixed;
+top:auto;
+bottom:0;
+left:0;
+display:flex;
+justify-content:space-around;
+align-items:center;
+padding:6px;
+border-right:none;
+border-top:1px solid rgba(255,255,255,.1);
+overflow:hidden;
+}
+
+.logo{display:none}
+
+.sidebar a{
+margin:0;
+padding:10px;
+font-size:0;
+justify-content:center;
+}
+
+.sidebar a i{
+font-size:20px;
+}
+
+.admin-login-screen{
+left:0;
+width:100%;
+height:calc(100vh - 70px);
+padding:15px;
+}
+
+.admin-login-box{
+padding:25px;
+border-radius:18px;
+}
+
+.main{
+margin-left:0;
+width:100%;
+padding:15px;
+padding-bottom:95px;
+}
+
+.title{
+font-size:25px;
+margin-bottom:20px;
+}
+
+.cards{
+grid-template-columns:1fr;
+gap:15px;
+}
+
+.form-grid{
+grid-template-columns:1fr;
+gap:15px;
+}
+
+.form-box,
+.table-box{
+padding:18px;
+border-radius:16px;
+}
+
+input,
+button{
+font-size:14px;
+padding:13px;
+}
+
+table{
+min-width:650px;
+font-size:13px;
+}
+
+th,td{
+padding:12px;
+white-space:nowrap;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<div class="logo">Sivam<span>Medicare</span></div>
+
+<a href="index.html">
+<i class="fas fa-home"></i>
+Home
+</a>
+
+<a href="service.html">
+<i class="fas fa-stethoscope"></i>
+Services
+</a>
+
+<a href="doctor-login.html">
+<i class="fas fa-user-doctor"></i>
+Doctor Login
+</a>
+
+<a href="patients.html">
+<i class="fas fa-hospital-user"></i>
+Patients
+</a>
+
+<a href="appointment.html">
+<i class="fas fa-calendar-check"></i>
+Appointment
+</a>
+
+<a href="admin.html" class="active">
+<i class="fas fa-lock"></i>
+Admin Panel
+</a>
+
+</div>
+
+<div class="admin-login-screen" id="adminLoginScreen">
+
+<div class="admin-login-box">
+<h2>Admin Password</h2>
+
+<input type="password" id="adminPassword" placeholder="Enter Password">
+
+<button onclick="checkAdminPassword()">Open Admin Panel</button>
+
+<p class="error" id="passwordError">Wrong Password</p>
+</div>
+
+</div>
+
+<div class="main" id="adminMain">
+
+<h1 class="title">Admin Panel</h1>
+
+<div class="container">
+
+<div class="cards">
+
+<div class="card">
+<i class="fas fa-user-doctor"></i>
+<h2 id="doctorCount">0</h2>
+<p>Total Doctors</p>
+</div>
+
+<div class="card">
+<i class="fas fa-user-nurse"></i>
+<h2 id="nurseCount">0</h2>
+<p>Total Nurses</p>
+</div>
+
+<div class="card">
+<i class="fas fa-user-injured"></i>
+<h2 id="dailyPatientCount">0</h2>
+<p>Daily Patients</p>
+</div>
+
+<div class="card">
+<i class="fas fa-bed-pulse"></i>
+<h2 id="admittedPatientCount">0</h2>
+<p>Admitted Patients</p>
+</div>
+
+<div class="card">
+<i class="fas fa-user-check"></i>
+<h2 id="dischargeCount">0</h2>
+<p>Discharged Patients</p>
+</div>
+
+</div>
+
+<div class="form-grid">
+
+<div class="form-box">
+<h2>Add Doctor</h2>
+
+<form onsubmit="addDoctor(event)">
+<input type="text" id="newDoctorId" placeholder="Doctor ID" required>
+<input type="text" id="newDoctorName" placeholder="Doctor Name" required>
+<input type="password" id="newDoctorPassword" placeholder="Doctor Password" required>
+<input type="text" id="newDoctorDepartment" placeholder="Department" required>
+<button type="submit">Add Doctor</button>
+</form>
+</div>
+
+<div class="form-box">
+<h2>Add Nurse</h2>
+
+<form onsubmit="addNurse(event)">
+<input type="text" id="newNurseId" placeholder="Nurse ID" required>
+<input type="text" id="newNurseName" placeholder="Nurse Name" required>
+<input type="text" id="newNurseWard" placeholder="Ward" required>
+<button type="submit">Add Nurse</button>
+</form>
+</div>
+
+</div>
+
+<div class="table-box">
+<h2>Doctor List</h2>
+
+<div class="table-scroll">
+<table id="doctorTable">
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Password</th>
+<th>Department</th>
+<th>Delete</th>
+</tr>
+</table>
+</div>
+</div>
+
+<div class="table-box">
+<h2>Nurse List</h2>
+
+<div class="table-scroll">
+<table id="nurseTable">
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Ward</th>
+<th>Delete</th>
+</tr>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+const ADMIN_PASSWORD = "123admin@";
+const API_BASE = "http://localhost:5000/api";
+
+let doctors = [];
+let nurses = [];
+
+window.onload = async function() {
+  document.getElementById("adminLoginScreen").style.display = "flex";
+  document.getElementById("adminMain").style.display = "none";
+  await loadDoctors();
+  await loadNurses();
+  loadCounts();
+};
+
+async function checkAdminPassword(){
+
+  let pass = document.getElementById("adminPassword").value;
+
+  try{
+
+    const response = await fetch(
+      "http://localhost:5000/api/admin/login",
+      {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          password:pass
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if(response.ok){
+
+      localStorage.setItem(
+        "adminToken",
+        data.token
+      );
+
+      document.getElementById("adminLoginScreen").style.display = "none";
+      document.getElementById("adminMain").style.display = "block";
+
+    }else{
+
+      document.getElementById("passwordError").style.display = "block";
+
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+}
+
+document.getElementById("adminPassword").addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    checkAdminPassword();
+  }
+});
+
+async function loadCounts() {
+  try {
+    const [appointmentResponse, patientResponse] = await Promise.all([
+      fetch(`${API_BASE}/appointments`),
+      fetch(`${API_BASE}/patients`)
+    ]);
+
+    if (!appointmentResponse.ok || !patientResponse.ok) {
+      throw new Error("Failed to fetch counts");
+    }
+
+    const appointments = await appointmentResponse.json();
+    const patients = await patientResponse.json();
+
+    const admitted = patients.filter(patient => patient.status === "Admitted");
+    const discharged = patients.filter(patient => patient.status === "Discharged");
+
+    document.getElementById("doctorCount").innerText = doctors.length;
+    document.getElementById("nurseCount").innerText = nurses.length;
+    document.getElementById("dailyPatientCount").innerText = appointments.length;
+    document.getElementById("admittedPatientCount").innerText = admitted.length;
+    document.getElementById("dischargeCount").innerText = discharged.length;
+  } catch (error) {
+    console.error("Error loading counts:", error);
+    document.getElementById("doctorCount").innerText = doctors.length;
+    document.getElementById("nurseCount").innerText = nurses.length;
+    document.getElementById("dailyPatientCount").innerText = "0";
+    document.getElementById("admittedPatientCount").innerText = "0";
+    document.getElementById("dischargeCount").innerText = "0";
+  }
+}
+
+async function loadDoctors() {
+  let table = document.getElementById("doctorTable");
+
+  table.innerHTML = `
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Password</th>
+      <th>Department</th>
+      <th>Delete</th>
+    </tr>
+  `;
+
+  try {
+    const response = await fetch(`${API_BASE}/doctors`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch doctors");
+    }
+
+    doctors = await response.json();
+  } catch (error) {
+    console.error(error);
+    doctors = [];
+    alert("Unable to load doctors from the server.");
+  }
+
+  doctors.forEach((doc) => {
+    table.innerHTML += `
+      <tr>
+        <td>${doc.doctorId || ""}</td>
+        <td>${doc.name || ""}</td>
+        <td>********</td>
+        <td>${doc.department || ""}</td>
+        <td>
+          <button class="delete-btn" onclick="deleteDoctor('${doc._id}')">Delete</button>
+        </td>
+      </tr>
+    `;
+  });
+
+  loadCounts();
+}
+
+async function loadNurses() {
+  let table = document.getElementById("nurseTable");
+
+  table.innerHTML = `
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Ward</th>
+      <th>Delete</th>
+    </tr>
+  `;
+
+  try {
+    const response = await fetch(`${API_BASE}/nurses`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch nurses");
+    }
+
+    nurses = await response.json();
+  } catch (error) {
+    console.error(error);
+    nurses = [];
+    alert("Unable to load nurses from the server.");
+  }
+
+  nurses.forEach((n) => {
+    table.innerHTML += `
+      <tr>
+        <td>${n.nurseId || ""}</td>
+        <td>${n.name || ""}</td>
+        <td>${n.ward || ""}</td>
+        <td>
+          <button class="delete-btn" onclick="deleteNurse('${n._id}')">Delete</button>
+        </td>
+      </tr>
+    `;
+  });
+
+  loadCounts();
+}
+
+async function addDoctor(event) {
+  event.preventDefault();
+
+  let id = document.getElementById("newDoctorId").value.trim();
+  let name = document.getElementById("newDoctorName").value.trim().toLowerCase();
+  let password = document.getElementById("newDoctorPassword").value.trim();
+  let department = document.getElementById("newDoctorDepartment").value.trim();
+
+  try {
+    const response = await fetch(`${API_BASE}/doctors`, {
+      method: "POST",
+      headers: {
+            "Content-Type": "application/json",
+             Authorization: localStorage.getItem("adminToken")
+      },
+      body: JSON.stringify({
+        doctorId: id,
+        name,
+        password,
+        department
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to add doctor");
+    }
+
+    await loadDoctors();
+    alert("Doctor Added Successfully");
+    event.target.reset();
+  } catch (error) {
+    console.error(error);
+    alert("Error Adding Doctor");
+  }
+}
+
+async function addNurse(event) {
+  event.preventDefault();
+
+  let id = document.getElementById("newNurseId").value.trim();
+  let name = document.getElementById("newNurseName").value.trim().toLowerCase();
+  let ward = document.getElementById("newNurseWard").value.trim();
+
+  try {
+    const response = await fetch(`${API_BASE}/nurses`, {
+      method: "POST",
+      headers: {
+  "Content-Type": "application/json",
+             Authorization: localStorage.getItem("adminToken")
+      },
+      body: JSON.stringify({
+        nurseId: id,
+        name,
+        ward
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to add nurse");
+    }
+
+    await loadNurses();
+    alert("Nurse Added Successfully");
+    event.target.reset();
+  } catch (error) {
+    console.error(error);
+    alert("Error Adding Nurse");
+  }
+}
+
+async function deleteDoctor(id) {
+  if (!confirm("Delete Doctor?")) return;
+
+  try {
+    const token = localStorage.getItem("adminToken");
+
+const response = await fetch(`${API_BASE}/doctors/${id}`, {
+  method:"DELETE",
+  headers:{
+    Authorization: token
+  }
+});
+
+    if (!response.ok) {
+      throw new Error("Failed to delete doctor");
+    }
+
+    await loadDoctors();
+  } catch (error) {
+    console.error(error);
+    alert("Error Deleting Doctor");
+  }
+}
+
+async function deleteNurse(id) {
+  if (!confirm("Delete Nurse?")) return;
+
+  try {
+    const token = localStorage.getItem("adminToken");
+
+const response = await fetch(`${API_BASE}/nurses/${id}`, {
+  method:"DELETE",
+  headers:{
+    Authorization: token
+  }
+});
+
+    if (!response.ok) {
+      throw new Error("Failed to delete nurse");
+    }
+
+    await loadNurses();
+  } catch (error) {
+    console.error(error);
+    alert("Error Deleting Nurse");
+  }
+}
+</script>
+</body>
+</html>

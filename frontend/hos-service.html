@@ -1,0 +1,474 @@
+<!-- ========================= -->
+<!-- FILE NAME : hos-service.html -->
+<!-- SERVICES PAGE WITH HOSPITAL DATA -->
+<!-- ========================= -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sivam Medicare - Services</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#020617;
+color:white;
+display:flex;
+min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:270px;
+background:#0f172a;
+padding:20px;
+position:fixed;
+left:0;
+top:0;
+height:100vh;
+}
+
+.logo{
+font-size:24px;
+font-weight:bold;
+margin-bottom:40px;
+}
+
+.logo span{
+color:#38bdf8;
+}
+
+.sidebar a{
+display:flex;
+align-items:center;
+gap:12px;
+text-decoration:none;
+color:white;
+padding:15px;
+border-radius:12px;
+margin-bottom:12px;
+transition:.3s;
+font-size:16px;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+background:#38bdf8;
+}
+
+/* CONTENT */
+
+.content{
+margin-left:270px;
+width:100%;
+padding:35px;
+}
+
+.title{
+text-align:center;
+font-size:40px;
+color:#38bdf8;
+margin-bottom:30px;
+}
+
+/* DATA ENTRY */
+
+.section{
+background:#111827;
+padding:25px;
+border-radius:20px;
+margin-bottom:30px;
+box-shadow:0 0 20px rgba(56,189,248,.15);
+}
+
+.section h2{
+color:#38bdf8;
+margin-bottom:20px;
+}
+
+.form-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+}
+
+input,
+button{
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+font-size:15px;
+}
+
+input{
+background:#1e293b;
+color:white;
+outline:none;
+}
+
+button{
+background:#38bdf8;
+color:white;
+cursor:pointer;
+transition:.3s;
+margin-top:15px;
+}
+
+button:hover{
+background:#0ea5e9;
+}
+
+/* TOP BOX */
+
+.top-box{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+margin-bottom:30px;
+}
+
+.box{
+background:#111827;
+padding:25px;
+border-radius:18px;
+text-align:center;
+box-shadow:0 0 20px rgba(56,189,248,.15);
+border-left:5px solid #38bdf8;
+}
+
+.box i{
+font-size:35px;
+color:#38bdf8;
+margin-bottom:10px;
+}
+
+.box h3{
+font-size:30px;
+margin-bottom:5px;
+}
+
+.box span{
+color:#cbd5e1;
+}
+
+/* SERVICES */
+
+.services{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.card{
+background:#111827;
+padding:35px;
+border-radius:20px;
+text-align:center;
+transition:.3s;
+box-shadow:0 5px 20px rgba(0,0,0,.3);
+}
+
+.card:hover{
+transform:translateY(-10px);
+background:#1e293b;
+}
+
+.card i{
+font-size:55px;
+color:#38bdf8;
+margin-bottom:15px;
+}
+
+.card h2{
+margin-bottom:10px;
+}
+
+.card p{
+color:#cbd5e1;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.sidebar{
+width:80px;
+padding:15px 10px;
+}
+
+.logo{
+font-size:12px;
+text-align:center;
+}
+
+.sidebar a{
+font-size:0;
+justify-content:center;
+}
+
+.sidebar a i{
+font-size:18px;
+}
+
+.content{
+margin-left:80px;
+padding:20px;
+}
+
+.title{
+font-size:28px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<div class="logo">
+Sivam<span>Medicare</span>
+</div>
+
+<a href="hos-index.html">
+<i class="fa-solid fa-house"></i>
+Home
+</a>
+
+<a href="hos-service.html" class="active">
+<i class="fa-solid fa-stethoscope"></i>
+Services
+</a>
+
+<a href="hos-doctor-login.html">
+<i class="fa-solid fa-user-doctor"></i>
+Doctor Login
+</a>
+
+<a href="hos-patients.html">
+<i class="fas fa-hospital-user"></i>
+Patients
+</a>
+
+<a href="hos-appointment.html">
+<i class="fa-solid fa-calendar-check"></i>
+Appointment
+</a>
+
+<a href="hos-admin.html">
+<i class="fa-solid fa-lock"></i>
+Admin Panel
+</a>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+<h1 class="title">Services Dashboard</h1>
+
+<!-- HOSPITAL DATA ENTRY -->
+
+<div class="section">
+
+<h2>Hospital Data Entry</h2>
+
+<form onsubmit="saveHospitalData(event)">
+
+<div class="form-grid">
+
+<input type="text" id="emergencyService" placeholder="Emergency Service e.g. 24/7" required>
+
+<input type="text" id="icuService" placeholder="ICU Care e.g. Advanced ICU" required>
+
+<input type="text" id="ambulanceService" placeholder="Ambulance Service e.g. 24/7 Available" required>
+
+<input type="text" id="operationTheatre" placeholder="Operation Theatre e.g. Available" required>
+
+</div>
+
+<button type="submit">
+Save Hospital Data
+</button>
+
+</form>
+
+</div>
+
+<!-- TOP DATA BOXES -->
+
+<div class="top-box">
+
+<div class="box">
+<i class="fa-solid fa-truck-medical"></i>
+<h3 id="emergencyText">24/7</h3>
+<span>Emergency Service</span>
+</div>
+
+<div class="box">
+<i class="fa-solid fa-user-doctor"></i>
+<h3 id="doctorCount">0</h3>
+<span>Doctors</span>
+</div>
+
+<div class="box">
+<i class="fa-solid fa-user-nurse"></i>
+<h3 id="nurseCount">0</h3>
+<span>Nurses</span>
+</div>
+
+<div class="box">
+<i class="fa-solid fa-user-injured"></i>
+<h3 id="patientCount">0</h3>
+<span>Patients</span>
+</div>
+
+<div class="box">
+<i class="fa-solid fa-bed-pulse"></i>
+<h3 id="icuText">ICU</h3>
+<span>Advanced Care</span>
+</div>
+
+</div>
+
+<!-- SERVICE CARDS -->
+
+<div class="services">
+
+<div class="card">
+<i class="fa-solid fa-heart-pulse"></i>
+<h2>Heart Care</h2>
+<p>Advanced cardiac treatment.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-user-doctor"></i>
+<h2>Expert Doctors</h2>
+<p>Experienced specialists available.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-truck-medical"></i>
+<h2 id="ambulanceTitle">Emergency</h2>
+<p id="ambulanceText">24/7 ambulance service.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-bed-pulse"></i>
+<h2>ICU</h2>
+<p id="icuCardText">Critical care units available.</p>
+</div>
+
+<div class="card">
+<i class="fa-solid fa-hospital"></i>
+<h2>Operation Theatre</h2>
+<p id="operationText">Modern operation theatre available.</p>
+</div>
+
+</div>
+
+</div>
+
+<script>
+doctors.length;
+nurses.length;
+hospitalData.emergency;
+hospitalData.icu;
+hospitalData.ambulance;
+hospitalData.icu;
+hospitalData.operation;
+
+const API_BASE = "http://localhost:5000/api";
+
+async function loadCounts() {
+	try {
+		const [doctorsRes, nursesRes, appointmentsRes, patientsRes] = await Promise.all([
+			fetch(`${API_BASE}/doctors`),
+			fetch(`${API_BASE}/nurses`),
+			fetch(`${API_BASE}/appointments`),
+			fetch(`${API_BASE}/patients`)
+		]);
+
+		if (!doctorsRes.ok || !nursesRes.ok || !appointmentsRes.ok || !patientsRes.ok) {
+			throw new Error('Failed to fetch counts');
+		}
+
+		const doctors = await doctorsRes.json();
+		const nurses = await nursesRes.json();
+		const appointments = await appointmentsRes.json();
+		const patients = await patientsRes.json();
+
+		document.getElementById("doctorCount").innerText = doctors.length;
+		document.getElementById("nurseCount").innerText = nurses.length;
+		document.getElementById("patientCount").innerText = appointments.length + patients.length;
+	} catch (err) {
+		console.error(err);
+	}
+}
+
+async function saveHospitalData(event) {
+	event.preventDefault();
+	const data = {
+		emergency: document.getElementById("emergencyService").value,
+		icu: document.getElementById("icuService").value,
+		ambulance: document.getElementById("ambulanceService").value,
+		operation: document.getElementById("operationTheatre").value
+	};
+	try {
+		const res = await fetch(`${API_BASE}/hospital-data`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(data)
+		});
+		if (!res.ok) throw new Error('Failed to save hospital data');
+		await res.json();
+		await loadHospitalData();
+		alert('Hospital Data Saved Successfully');
+		event.target.reset();
+	} catch (err) {
+		console.error(err);
+		alert('Error saving hospital data');
+	}
+}
+
+async function loadHospitalData() {
+	try {
+		const res = await fetch(`${API_BASE}/hospital-data`);
+		if (!res.ok) throw new Error('Failed to load hospital data');
+		const data = await res.json();
+		if (!data) return;
+		document.getElementById("emergencyText").innerText = data.emergency || '';
+		document.getElementById("icuText").innerText = data.icu || '';
+		document.getElementById("ambulanceText").innerText = data.ambulance || '';
+		document.getElementById("icuCardText").innerText = data.icu || '';
+		document.getElementById("operationText").innerText = data.operation || '';
+	} catch (err) {
+		console.error(err);
+	}
+}
+
+loadCounts();
+loadHospitalData();
+
+</script>
+
+</body>
+</html>

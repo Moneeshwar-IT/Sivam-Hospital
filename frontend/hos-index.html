@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Sivam Medicare - Home</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+/* RESET */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+/* BODY */
+
+body{
+background:#020617;
+color:white;
+display:flex;
+min-height:100vh;
+overflow-x:hidden;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:270px;
+background:#0f172a;
+padding:20px;
+position:fixed;
+left:0;
+top:0;
+height:100vh;
+overflow-y:auto;
+border-right:1px solid rgba(255,255,255,.05);
+}
+
+.logo{
+font-size:24px;
+font-weight:bold;
+margin-bottom:40px;
+color:white;
+}
+
+.logo span{
+color:#38bdf8;
+}
+
+/* SIDEBAR BUTTONS */
+
+.sidebar a{
+display:flex;
+align-items:center;
+gap:12px;
+text-decoration:none;
+color:white;
+padding:15px;
+border-radius:12px;
+margin-bottom:12px;
+transition:.3s;
+font-size:16px;
+background:#111827;
+}
+
+.sidebar a:hover{
+background:#1e293b;
+}
+
+.sidebar a.active{
+background:#38bdf8;
+}
+
+/* CONTENT */
+
+.content{
+margin-left:270px;
+width:100%;
+}
+
+/* HERO SECTION */
+
+.hero{
+height:100vh;
+
+background:
+linear-gradient(rgba(0,0,0,0.7),
+rgba(0,0,0,0.7)),
+
+url('https://images.unsplash.com/photo-1586773860418-d37222d8fce3?q=80&w=1200&auto=format&fit=crop')
+center/cover no-repeat;
+
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+}
+
+/* HERO CONTENT */
+
+.hero-content{
+max-width:850px;
+}
+
+.hero h1{
+font-size:65px;
+margin-bottom:20px;
+line-height:1.2;
+}
+
+.hero p{
+font-size:22px;
+color:#cbd5e1;
+line-height:1.7;
+margin-bottom:30px;
+}
+
+/* BUTTONS */
+
+.hero-buttons{
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.hero button{
+padding:15px 35px;
+border:none;
+border-radius:12px;
+font-size:18px;
+cursor:pointer;
+transition:.3s;
+}
+
+.book-btn{
+background:#38bdf8;
+color:white;
+}
+
+.book-btn:hover{
+background:#0ea5e9;
+transform:translateY(-3px);
+}
+
+.service-btn{
+background:#111827;
+color:white;
+border:1px solid #38bdf8;
+}
+
+.service-btn:hover{
+background:#38bdf8;
+transform:translateY(-3px);
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.sidebar{
+width:80px;
+padding:15px 10px;
+}
+
+.logo{
+font-size:12px;
+text-align:center;
+}
+
+.sidebar a{
+font-size:0;
+justify-content:center;
+padding:15px 10px;
+}
+
+.sidebar a i{
+font-size:18px;
+margin:0;
+}
+
+.content{
+margin-left:80px;
+}
+
+.hero{
+padding:25px;
+}
+
+.hero h1{
+font-size:38px;
+}
+
+.hero p{
+font-size:18px;
+}
+
+.hero button{
+width:100%;
+}
+
+.hero-buttons{
+flex-direction:column;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<div class="logo">
+Sivam<span>Medicare</span>
+</div>
+
+<a href="hos-index.html"
+class="active">
+
+<i class="fa-solid fa-house"></i>
+Home
+
+</a>
+
+<a href="hos-service.html">
+
+<i class="fa-solid fa-stethoscope"></i>
+Services
+
+</a>
+
+<a href="hos-doctor-login.html">
+
+<i class="fa-solid fa-user-doctor"></i>
+Doctor Login
+
+</a>
+
+<a href="hos-patients.html">
+
+<i class="fas fa-hospital-user"></i>
+Patients
+
+</a>
+
+<a href="hos-appointment.html">
+
+<i class="fa-solid fa-calendar-check"></i>
+Appointment
+
+</a>
+
+<a href="hos-admin.html">
+
+<i class="fa-solid fa-lock"></i>
+Admin Panel
+
+</a>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h1>
+Welcome To Sivam Medicare
+</h1>
+
+<p>
+24/7 Emergency Services With Experienced Doctors,
+Advanced ICU Care, Modern Treatments,
+Trusted Medical Support And Patient Friendly Care.
+</p>
+
+<div class="hero-buttons">
+
+<button class="book-btn"
+onclick="window.location.href='hos-appointment.html'">
+
+Book Appointment
+
+</button>
+
+<button class="Addmisson Room-btn"
+onclick="window.location.href='hos-patients.html'">
+
+Addmisson Room
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+</body>
+</html>
