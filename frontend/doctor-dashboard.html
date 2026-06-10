@@ -432,7 +432,7 @@ Logout
 
 <script>
 
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = "https://sivam-hospital.onrender.com/api";
 let currentDoctor = JSON.parse(sessionStorage.getItem("currentDoctor"));
 
 if (!currentDoctor) {
@@ -567,7 +567,7 @@ async function dischargePatient(patientId) {
   if (confirm("Discharge this patient?")) {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/patients/${patientId}`,
+        `https://sivam-hospital.onrender.com/api/patients/${patientId}`,
         {
           method: "PUT",
           headers: {

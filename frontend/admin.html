@@ -543,7 +543,7 @@ Admin Panel
 
 <script>
 const ADMIN_PASSWORD = "123admin@";
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = "https://sivam-hospital.onrender.com/api";
 
 let doctors = [];
 let nurses = [];
@@ -563,7 +563,7 @@ async function checkAdminPassword(){
   try{
 
     const response = await fetch(
-      "http://localhost:5000/api/admin/login",
+      "https://sivam-hospital.onrender.com/api/admin/login",
       {
         method:"POST",
         headers:{
