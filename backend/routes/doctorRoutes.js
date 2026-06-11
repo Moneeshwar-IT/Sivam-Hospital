@@ -63,8 +63,7 @@ router.post(
 
 router.get("/", async(req,res)=>{
   const doctors =
-    await Doctor.find()
-    .select("-password");
+    await Doctor.find();
 
   res.json(doctors);
 });
