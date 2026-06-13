@@ -532,21 +532,37 @@ ${nurse.name}
   });
 }
 
-function doctorLogin() {
+async function doctorLogin() {
   const id = document.getElementById("doctorId").value.trim();
   const name = document.getElementById("doctorName").value.trim().toLowerCase();
   const pass = document.getElementById("doctorPassword").value.trim();
 
-  const found = doctors.find(doc =>
-    doc.doctorId === id &&
-    doc.name.toLowerCase() === name &&
-    doc.password === pass
-  );
+  try {
+    const response = await fetch(`${API_BASE}/auth/doctor-login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ doctorId: id, password: pass })
+    });
+    
+    const data = await response.json();
 
-  if (found) {
-    sessionStorage.setItem("currentDoctor", JSON.stringify(found));
-    window.location.href = "doctor-dashboard.html";
-  } else {
+    if (response.ok) {
+      const found = doctors.find(doc => doc.doctorId === id && doc.name.toLowerCase() === name);
+      if (found) {
+        sessionStorage.setItem("doctorToken", data.token);
+        sessionStorage.setItem("currentDoctor", JSON.stringify(found));
+        window.location.href = "doctor-dashboard.html";
+      } else {
+        document.getElementById("errorMsg").innerText = "Doctor name does not match the ID.";
+        document.getElementById("errorMsg").style.display = "block";
+      }
+    } else {
+      document.getElementById("errorMsg").innerText = data.message || "Wrong Login Details";
+      document.getElementById("errorMsg").style.display = "block";
+    }
+  } catch (error) {
+    console.error("Login error:", error);
+    document.getElementById("errorMsg").innerText = "An error occurred during login.";
     document.getElementById("errorMsg").style.display = "block";
   }
 }

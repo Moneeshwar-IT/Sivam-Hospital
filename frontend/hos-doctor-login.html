@@ -344,53 +344,6 @@ Wrong Login Details
 
 <script>
 
-/* DEFAULT DOCTORS */
-
-let defaultDoctors = [
-{
-id:"SM101",
-name:"dr sivam",
-password:"1234",
-department:"Cardiology"
-},
-{
-id:"SM102",
-name:"dr arun",
-password:"5678",
-department:"Neurology"
-},
-{
-id:"SM103",
-name:"dr priya",
-password:"9999",
-department:"Pediatrics"
-}
-];
-
-/* DEFAULT NURSES */
-
-let defaultNurses = [
-{
-id:"NR101",
-name:"nurse meena",
-ward:"Emergency"
-},
-{
-id:"NR102",
-name:"nurse kavitha",
-ward:"ICU"
-}
-];
-
-doctors.forEach(doc => {
-doctorList.innerHTML += `
-document.getElementById("doctorId").value.trim();
-document.getElementById("doctorName").value.trim().toLowerCase();
-document.getElementById("doctorPassword").value.trim();
-doctors.find(doc =>
-doc.id === id &&
-doc.name.toLowerCase() === name &&
-doc.password === pass
 const API_BASE = "https://sivam-hospital.onrender.com/api";
 let doctors = [];
 let nurses = [];
@@ -469,21 +422,37 @@ ${nurse.name}
 	});
 }
 
-function doctorLogin() {
+async function doctorLogin() {
 	const id = document.getElementById("doctorId").value.trim();
 	const name = document.getElementById("doctorName").value.trim().toLowerCase();
 	const pass = document.getElementById("doctorPassword").value.trim();
 
-	const found = doctors.find(doc =>
-		doc.doctorId === id &&
-		doc.name.toLowerCase() === name &&
-		doc.password === pass
-	);
+	try {
+		const response = await fetch(`${API_BASE}/auth/doctor-login`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ doctorId: id, password: pass })
+		});
+		
+		const data = await response.json();
 
-	if (found) {
-		sessionStorage.setItem("currentDoctor", JSON.stringify(found));
-		window.location.href = "doctor-dashboard.html";
-	} else {
+		if (response.ok) {
+			const found = doctors.find(doc => doc.doctorId === id && doc.name.toLowerCase() === name);
+			if (found) {
+				sessionStorage.setItem("doctorToken", data.token);
+				sessionStorage.setItem("currentDoctor", JSON.stringify(found));
+				window.location.href = "doctor-dashboard.html";
+			} else {
+				document.getElementById("errorMsg").innerText = "Doctor name does not match the ID.";
+				document.getElementById("errorMsg").style.display = "block";
+			}
+		} else {
+			document.getElementById("errorMsg").innerText = data.message || "Wrong Login Details";
+			document.getElementById("errorMsg").style.display = "block";
+		}
+	} catch (error) {
+		console.error("Login error:", error);
+		document.getElementById("errorMsg").innerText = "An error occurred during login.";
 		document.getElementById("errorMsg").style.display = "block";
 	}
 }
