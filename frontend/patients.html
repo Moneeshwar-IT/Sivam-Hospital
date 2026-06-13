@@ -580,7 +580,6 @@ async function loadAdmittedPatients() {
     table.innerHTML = `<tr><th>Patient Name</th><th>Room No</th><th>Doctor</th><th>Disease</th><th>Status</th><th>Action</th></tr>`;
     patients.forEach(p => {
       let actions = `<button class="delete-btn" onclick="deleteAdmittedPatient('${p._id}')">Delete</button>`;
-      if (p.status === 'Admitted') actions += ` <button class="discharge-btn" onclick="dischargePatientAdmin('${p._id}')">Discharge</button>`;
       table.innerHTML += `<tr><td>${p.name || '-'}</td><td>${p.room || '-'}</td><td>${p.doctor || '-'}</td><td>${p.disease || '-'}</td><td>${p.status || '-'}</td><td>${actions}</td></tr>`;
     });
     document.getElementById('admitCount').innerText = patients.filter(p => p.status === 'Admitted').length;
@@ -624,23 +623,6 @@ async function deleteAdmittedPatient(id) {
   } catch (err) {
     console.error(err);
     alert('Error Deleting Patient');
-  }
-}
-
-async function dischargePatientAdmin(id) {
-  if (!confirm('Discharge this patient?')) return;
-  try {
-    const res = await fetch(`${API_BASE}/patients/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: 'Discharged' })
-    });
-    if (!res.ok) throw new Error('Failed to discharge patient');
-    await loadAdmittedPatients();
-    alert('Patient Discharged Successfully');
-  } catch (err) {
-    console.error(err);
-    alert('Error Discharging Patient');
   }
 }
 
